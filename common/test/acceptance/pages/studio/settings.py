@@ -13,7 +13,6 @@ from common.test.acceptance.pages.studio.course_page import CoursePage
 from common.test.acceptance.pages.studio.users import wait_for_ajax_or_reload
 from common.test.acceptance.pages.studio.utils import press_the_notification_button, type_in_codemirror
 
-
 @requirejs('js/factories/settings')
 class SettingsPage(CoursePage):
     """
@@ -261,15 +260,17 @@ class SettingsPage(CoursePage):
         """
         checkbox = self.entrance_exam_field
         selected = checkbox.is_selected()
+        self.scroll_to_element('#entrance-exam-enabled')
+        self.wait_for_page()
         if required and not selected:
             checkbox.click()
-            self.wait_for_element_visibility(
+            self.wait_for_element_presence(
                 '#entrance-exam-minimum-score-pct',
                 'Entrance exam minimum score percent is visible'
             )
         if not required and selected:
             checkbox.click()
-            self.wait_for_element_invisibility(
+            self.wait_for_element_presence(
                 '#entrance-exam-minimum-score-pct',
                 'Entrance exam minimum score percent is invisible'
             )
