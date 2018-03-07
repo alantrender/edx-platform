@@ -14,7 +14,11 @@ def translate_date(date, language, date_format='DATE_FORMAT'):
         assert date_in_spanish = '12 de Deciembre de 2017'
     """
     with override(language):
-        return dateformat.format(
+        formatted_date = dateformat.format(
             date,
             get_format(date_format, lang=language, use_l10n=True),
+
         )
+        if language.startswith('es'):
+            formatted_date = formatted_date.lower()
+        return formatted_date
