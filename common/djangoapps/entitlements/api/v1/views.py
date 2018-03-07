@@ -254,7 +254,7 @@ class EntitlementViewSet(viewsets.ModelViewSet):
                         unenrolled_run_course_key = CourseKey.from_string(unenrolled_run_id)
                         CourseEnrollment.unenroll(entitlement.user, unenrolled_run_course_key, skip_refund=True)
                         parsed_details['unenrolled_run'] = CourseOverview.objects.get(id=unenrolled_run_course_key)
-                except Exception as error:  # pylint: disable=bare-except
+                except Exception as error:  # pylint: disable=broad-except
                     return HttpResponseBadRequest(
                         u'{error} was raised while trying to unenroll user {user} from course run {course_id}'.format(
                             error=error, user=entitlement.user.username, course_id=unenrolled_run_id
