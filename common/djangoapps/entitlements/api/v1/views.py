@@ -260,10 +260,10 @@ class EntitlementViewSet(viewsets.ModelViewSet):
                             course_id=unenrolled_run_id
                         )
                     )
-            CourseEntitlementSupportDetail.objects.create(**parsed_details)    
+            CourseEntitlementSupportDetail.objects.create(**parsed_details)
 
         return super(EntitlementViewSet, self).partial_update(request, *args, **kwargs)
-                
+
 
 class EntitlementEnrollmentViewSet(viewsets.GenericViewSet):
     """
