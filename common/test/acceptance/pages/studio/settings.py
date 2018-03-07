@@ -259,6 +259,7 @@ class SettingsPage(CoursePage):
         Set the entrance exam requirement via the checkbox.
         """
         checkbox = self.entrance_exam_field
+        self.wait_for(lambda: checkbox.is_enabled(), "Wait for checkbox to be enabled", timeout=10)
         selected = checkbox.is_selected()
         self.scroll_to_element('#entrance-exam-enabled')
         if required and not selected:
