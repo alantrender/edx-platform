@@ -260,6 +260,7 @@ class SettingsPage(CoursePage):
         """
         checkbox = self.entrance_exam_field
         selected = checkbox.is_selected()
+        self.scroll_to_element('#entrance-exam-enabled')
         if required and not selected:
             # checkbox.click()
             self.wait_for_element_presence(
