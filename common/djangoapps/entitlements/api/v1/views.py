@@ -121,7 +121,7 @@ class EntitlementViewSet(viewsets.ModelViewSet):
         return CourseEntitlement.objects.all().select_related('user').select_related('enrollment_course_run')
 
     def create(self, request, *args, **kwargs):
-        support_details = request.data.pop('support_details', None)
+        support_details = request.data.pop('support_details', [])
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -254,10 +254,10 @@ class EntitlementViewSet(viewsets.ModelViewSet):
                         unenrolled_run_course_key = CourseKey.from_string(unenrolled_run_id)
                         CourseEnrollment.unenroll(entitlement.user, unenrolled_run_course_key, skip_refund=True)
                         parsed_details['unenrolled_run'] = CourseOverview.objects.get(id=unenrolled_run_course_key)
-                except:
+                except Exception as error:  # pylint: disable=bare-except
                     return HttpResponseBadRequest(
-                        u'Could not unenroll user from course run {course_id}'.format(
-                            course_id=unenrolled_run_id
+                        u'{error} was raised while trying to unenroll user {user} from course run {course_id}'.format(
+                            error=error, user=entitlement.user.username, course_id=unenrolled_run_id
                         )
                     )
             CourseEntitlementSupportDetail.objects.create(**parsed_details)
