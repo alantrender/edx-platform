@@ -18,7 +18,7 @@ const requestEntitlements = ({username}) => {
   );
 }
 
-const createEntitlement = ({username, courseUuid, mode, reason, comments}) => {
+const createEntitlement = ({username, courseUuid, mode, action, comments}) => {
   return fetch(
     `${entitlementApi}`, {
       credentials: 'same-origin',
@@ -37,7 +37,7 @@ const createEntitlement = ({username, courseUuid, mode, reason, comments}) => {
   );
 }
 
-const updateEntitlement = ({entitlementUuid, unenrolledRun, reason, comments}) => {
+const updateEntitlement = ({entitlementUuid, unenrolledRun, action, comments}) => {
   return fetch(
     `${entitlementApi}/${entitlementUuid}`, {
       credentials: 'same-origin',
